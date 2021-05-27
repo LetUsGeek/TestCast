@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+
+        #debug {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 25%;
+            height: 100%;
+            background-color: #EEE;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        #maze {
+            position: relative;
+            display: block;
+            margin: 30px;
+        }
+
+        #winner {
+            padding: 50px;
+            position: absolute;
+            display: none;
+            height: 450px;
+            width: 300px;
+            top: 0;
+            text-align: center;
+            background-color: #EEE;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+        }
+
+        #winner-color {
+            height: 100px;
+            width: 100px;
+            background-color: #009926;
+            border-radius: 3px;
+            margin: 30px auto;
+        }
+
+        .leader-board {
+            padding: 10px;
+        }
+
+        .lb-player-color {
+            height: 20px;
+            width: 20px;
+            border-radius: 20px;
+            background-color: black;
+            float: left;
+        }
+
+        .lb-player {
+
+        }
+
+        .lb-list {
+            list-style: none;
+        }
+
+        .lb-player-position {
+            height: 30px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <iframe src="http://www.pocketdivxencoder.net" height="800" width="800"></iframe> -->
+<div style="color:red;">Nicho Buibui</div>
+<div id="maze-container">
+    <canvas oncontextmenu="return false;" id="maze" width="750" height="750"></canvas>
+</div>
+
+<div id="debug"></div>
+
+<div id="winner">
+    <h1>Congratulation</h1>
+    <div id="winner-color"></div>
+    <br/>
+    You win!
+    <br/>
+    <br/>
+    New game in <span id="countdown-time"></span> seconds :)
+    <div class="leader-board">
+        <h2>Leader Board</h2>
+        <ul class="lb-list">
+            <li class="lb-player">
+                <div id="first-victory-color" class="lb-player-color"></div>
+                <div class="lb-player-position">1 - <span id="first-victory-count">0</span> victory(ies)</div>
+            </li>
+            <li class="lb-player">
+                <div id="second-victory-color" class="lb-player-color"></div>
+                <div class="lb-player-position">2 - <span id="second-victory-count">0</span> victory(ies)</div>
+            </li>
+            <li class="lb-player">
+                <div id="third-victory-color" class="lb-player-color"></div>
+                <div class="lb-player-position">3 - <span id="third-victory-count">0</span> victory(ies)</div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+<script type="text/javascript" src="lodash.min.js"></script>
+<script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="cast.js"></script>
+</body>
+</html>

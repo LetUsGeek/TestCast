@@ -1,0 +1,12 @@
+.gradle
+.idea/
+*.iml
+.DS_Store
+node_modules
+dist
+.grunt
+_site
+*.pbxuser
+xcuserdata
+*.xccheckout
+*~
