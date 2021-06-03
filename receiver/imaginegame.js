@@ -1,3 +1,5 @@
+var leftGlobal=0;
+var mycontainer;
 var mycanvas;
 var mycontext;
 var theMaze = null;
@@ -18,10 +20,12 @@ function bindUi() {
 function newImagineBoard() {
     document.getElementById('imagineBoard').remove();
     document.getElementById('imagineBoard-container').innerHTML = "toto<canvas id='imagineBoard' width='750' height='750'></canvas>";
+    // document.getElementById('imagineBoard-container').innerHTML = "<div id='toto' style = 'position:absolute;'><img src='img/0.svg' /></div>";
     // window.checkDebug();
     mycanvas = document.getElementById('imagineBoard');
     mycontext = mycanvas.getContext('2d');
     mycontext.font = "bold 20px sans-serif";
+    // mycontainer = document.getElementById('imagineBoard-container');
    
        
 }
@@ -37,19 +41,41 @@ function log_test(msg) {
 }
 
 function handleMessage(myData, mySenderId) {
+    
+    
+    
     log_test("myData="+myData);
+    leftGlobal++;
+
+    // document.getElementById('toto').style.left = document.getElementById('toto').style.left+1;
+
 
     var myImage = new Image();
     myImage.onload = function() {
-        // console.log(myImage.width, myImage.height);
-        mycontext.drawImage(myImage, 0, 0, myImage.width, myImage.height, 0, 0, mycanvas.width/2, mycanvas.height/2);
+        mycontext.clearRect(0,0, mycanvas.width,mycanvas.height);
+        mycontext.drawImage(myImage, 0, 0, myImage.width, myImage.height, leftGlobal, leftGlobal, mycanvas.width/2, mycanvas.height/2);
     }
-    // myImage.src = './img/Avatar_Nicho_by_Buibui_ICO_512.png'; 
-    // myImage.src = './img/0.svg'; 
-    // myImage.src = './img/'+myData.substr(0,2);
-    myImage.src = 'img/'+myData+'.svg';
+
+
+    // myImage.src = 'img/'+myData+'.svg';
+    myImage.src = 'img/0.svg';
       
     
+        // Protocole:
+        // Séparateur d'images: "|"
+        // Sous-séparateur de champs: ":"
+        // 1er champ: Numéro d'image
+        // 2nd champ: Offet X
+        // 3ème champ: Offet Y
+        // 4ème champ: Scale
+        // 5ème champ: Rotation
+        // 6ème champ: zIndex
+        // var str = "12:36:28:0.6:45|18:12:6:0.1:12";
+        // var mesimages = str.split("|");
+        // for (i=0; i<mesimages.length; i++) {
+        //   document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML+"<br/>"+mesimages[i];
+        // }
+      
 
 };
 
