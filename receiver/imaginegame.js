@@ -2,6 +2,8 @@ var mycontainer;
 var mycanvas;
 var mycontext;
 
+var buibuiGlobal =0 ;
+
 function newImagineBoard() {
     document.getElementById('imagineBoard').remove();
     document.getElementById('imagineBoard-container').innerHTML = "toto<canvas id='imagineBoard' width='750' height='750'></canvas>";
@@ -43,10 +45,10 @@ function generateMessageNicho(data){
 
         case 'left':
           console.log('Direction = gauche');
-          handleMessage('I|18:275:375:100:100:-30:1:1|24:375:375:100:100:45:1:1','Nicho_Id')
+          var intervalID = window.setInterval(handleMessage, 2, 'I|18:275:375:100:100:-30:1:1|24:375:375:100:100:45:1:1', 'Nicho_Id');
+        //   handleMessage('I|18:275:375:100:100:-30:1:1|24:375:375:100:100:45:1:1','Nicho_Id')
           if (leftGlobal<300)
           {
-            console.log('je lance l animation')
             // window.requestAnimationFrame(handleMessage(leftGlobal));
           }
 
@@ -71,8 +73,9 @@ function handleMessage(myData, mySenderId) {
     var myImages = {};
     var tableau_parametres_images = myData.split("|");
     
-    mycontext.clearRect(0,0, mycanvas.width,mycanvas.height);
-    mycontext.strokeRect(0,0, mycanvas.width,mycanvas.height);
+    buibuiGlobal = buibuiGlobal + 1;
+    console.log('buibuiGlobal='+buibuiGlobal);
+
     
 
     for (var i=1; i<tableau_parametres_images.length; i++) { 
@@ -82,11 +85,15 @@ function handleMessage(myData, mySenderId) {
         myImages[i].id = i;
         
         myImages[i].onload = function() {
+            if (this.id == 1)
+            {
+                mycontext.clearRect(0,0, mycanvas.width,mycanvas.height);
+                mycontext.strokeRect(0,0, mycanvas.width,mycanvas.height);
+            }
             var current_image_parameters = tableau_parametres_images[this.id].split(":");
-            console.log("dans onload i="+this.id);
             mycontext.save();
             mycontext.translate(current_image_parameters[1], current_image_parameters[2]);
-            mycontext.rotate(current_image_parameters[5]*(2*Math.PI)/360);
+            mycontext.rotate(((buibuiGlobal)*1+(current_image_parameters[5])*1)*(2*Math.PI)/360);
             mycontext.scale(current_image_parameters[6]*current_image_parameters[3]/100,current_image_parameters[7]*current_image_parameters[4]/100);
             // mycontext.strokeRect( -this.width/2, -this.height/2, this.width, this.height);
             mycontext.drawImage(this, -this.width/2, -this.height/2);
