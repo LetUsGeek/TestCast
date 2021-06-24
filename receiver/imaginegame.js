@@ -1,20 +1,41 @@
 var mycontainer;
 var mycanvas;
 var mycontext;
+var myImages = {};
+const numImages = 31;
+
+var datestart= Date.now();
+    
 
 var buibuiGlobal =0 ;
 
 function newImagineBoard() {
     document.getElementById('imagineBoard').remove();
-    document.getElementById('imagineBoard-container').innerHTML = "toto<canvas id='imagineBoard' width='750' height='750'></canvas>";
+    document.getElementById('imagineBoard-container').innerHTML = "<canvas id='imagineBoard' width='1000' height='1000' style='width:100%;height: 100%;'></canvas>";
     // document.getElementById('imagineBoard-container').innerHTML = "<div id='toto' style = 'position:absolute;'><img src='img/0.svg' /></div>";
     // window.checkDebug();
     mycanvas = document.getElementById('imagineBoard');
     mycontext = mycanvas.getContext('2d');
     mycontext.font = "bold 20px sans-serif";
     // mycontainer = document.getElementById('imagineBoard-container');
+
+    //Chargement du tableau de toutes les images
+    var loadedImages = 0;
+  
+    for (var i=0; i<numImages; i++) { 
+        myImages[i] = new Image();
+        myImages[i].src = 'img/'+i+'.png';
+        myImages[i].id = i;
+        // myImages[i].onload = function() {
+        //     if(++loadedImages >= numImages) {
+        //         displayImages(myData, mySenderId);
+        //     }
+        // }
+    }   
        
 }
+
+
 
 
 function log_test(msg) {
@@ -28,8 +49,8 @@ function log_test(msg) {
 
 function generateMessageNicho(data){
     switch (data) {
-         // Protocole:
-        // 1er champ = type de message (I = image, S = score, C = chat, H = horloge)
+        // Protocole:
+        // 1er champ = type de message (I = image, S = score, C = chat, T = timer)
             // Séparateur d'images: "|"
             // Sous-séparateur de champs: ":"
             // 0ème champ: Id de la carte
@@ -45,9 +66,11 @@ function generateMessageNicho(data){
 
         case 'left':
           console.log('Direction = gauche');
-          var intervalID = window.setInterval(handleMessage, 2, 'I|18:275:375:100:100:-30:1:1|24:375:375:100:100:45:1:1', 'Nicho_Id');
+          var intervalID = window.setInterval(handleMessage, 1, 'I|18:275:375:70:70:-30:1:1|24:375:375:20:20:45:1:1|13:375:175:50:50:75:-1:1', 'Nicho_Id');
+
+          var timerintervalID = window.setInterval(handleMessage, 1, 'T|05:49', 'Nicho_Id');
         //   handleMessage('I|18:275:375:100:100:-30:1:1|24:375:375:100:100:45:1:1','Nicho_Id')
-          if (leftGlobal<300)
+        //   if (leftGlobal<300)
           {
             // window.requestAnimationFrame(handleMessage(leftGlobal));
           }
@@ -70,37 +93,52 @@ function generateMessageNicho(data){
 
 function handleMessage(myData, mySenderId) {
 
-    var myImages = {};
+    // var tableau_parametres_images = myData.split("|");
+    switch (myData[0]) {
+        case 'I' :
+            displayImages(myData, mySenderId);
+            break;
+        case 'T' :
+            displayTimer(myData, mySenderId);
+            break;
+        default :
+            console.log('Undefined message received '+myData);
+    }
+    
+};
+
+function displayTimer(myData, mySenderId) {
+    var tableau_timer = myData.split("|");
+
+    var d = new Date();
+    var hours = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    console.log(hours);
+
+    // document.getElementById('div_timer').innerHTML = tableau_timer[1];
+    document.getElementById('div_timer').innerHTML = hours;
+    
+}
+
+function displayImages(myData, mySenderId) {
+
     var tableau_parametres_images = myData.split("|");
     
     buibuiGlobal = buibuiGlobal + 1;
-    console.log('buibuiGlobal='+buibuiGlobal);
-
-    
-
+ 
     for (var i=1; i<tableau_parametres_images.length; i++) { 
         var current_image_parameters = tableau_parametres_images[i].split(":");
-        myImages[i] = new Image();
-        myImages[i].src = 'img/'+current_image_parameters[0]+'.png';
-        myImages[i].id = i;
-        
-        myImages[i].onload = function() {
-            if (this.id == 1)
+        var current_image_id = current_image_parameters[0];
+            if (i == 1)
             {
                 mycontext.clearRect(0,0, mycanvas.width,mycanvas.height);
                 mycontext.strokeRect(0,0, mycanvas.width,mycanvas.height);
             }
-            var current_image_parameters = tableau_parametres_images[this.id].split(":");
             mycontext.save();
-            mycontext.translate(current_image_parameters[1], current_image_parameters[2]);
+            mycontext.translate((1*current_image_parameters[1]+1*buibuiGlobal)%mycanvas.width, current_image_parameters[2]);
             mycontext.rotate(((buibuiGlobal)*1+(current_image_parameters[5])*1)*(2*Math.PI)/360);
             mycontext.scale(current_image_parameters[6]*current_image_parameters[3]/100,current_image_parameters[7]*current_image_parameters[4]/100);
-            // mycontext.strokeRect( -this.width/2, -this.height/2, this.width, this.height);
-            mycontext.drawImage(this, -this.width/2, -this.height/2);
-            mycontext.restore();
-        }
-
-  
+            mycontext.drawImage(myImages[current_image_id], -myImages[current_image_id].width/2, -myImages[current_image_id].height/2);
+            mycontext.restore(); 
     }   
 
 };

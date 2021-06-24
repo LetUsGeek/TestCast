@@ -103,28 +103,39 @@
 </head>
 <body>
     <!-- <iframe src="http://www.pocketdivxencoder.net" height="800" width="800"></iframe> -->
-<div style="color:red;">Nicho Buibui</div>
 
 
-<input class="favorite styled"
-       type="button"
-       value="Commande 1"
-       onclick="generateMessageNicho('left')">
+<div id="imagineBoard-container" style="width: 66%;float: left;background-color: #C9C4E2; box-shadow: inset 5px 5px #340E57;">
 
-<div id="imagineBoard-container">
-    Toto
-    <canvas id="imagineBoard" width="750" height="750">
+    <canvas id="imagineBoard" width="750" height="750" style="width: 100%;height: 100%;">
         
     </canvas>
     
 </div>
+
+<div id = "divers_droite" style="color:red;float: left;width: 33%; background-color: #C9C4E2; height: 100%;">
+    
+    <div id = "div_timer" style="width: 100%; text-align: center; font: 10em monospace; color: #340E57;">
+        <!-- Timer de Nicho Buibui -->
+
+    </div>
+    <div>
+        <input class="favorite styled"
+           type="button"
+           value="Commande 1"
+           onclick="generateMessageNicho('left')"
+           style="width: 100%; text-align: center;">
+    </div>
+</div>
+
+
 
 
 <!-- <div id="maze-container">
     <canvas oncontextmenu="return false;" id="maze" width="750" height="750"></canvas>
 </div> -->
 
-<div id="debug"></div>
+<!-- <div id="debug"></div> -->
 
 <div id="winner">
     <h1>Congratulation</h1>

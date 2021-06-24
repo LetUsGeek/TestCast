@@ -1,4 +1,4 @@
-window.debug = true;
+window.debug = false;
 
 function checkDebug() {
     if (window.debug) {
