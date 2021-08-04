@@ -3,10 +3,10 @@ window.debug = false;
 function checkDebug() {
     if (window.debug) {
         document.getElementById('debug').style.display = 'block';
-        document.getElementById('maze').style.margin = '30px';
+        // document.getElementById('maze').style.margin = '30px';
     } else {
         document.getElementById('debug').style.display = 'none';
-        document.getElementById('maze').style.margin = '30px auto';
+        // document.getElementById('maze').style.margin = '30px auto';
     }
 }
 

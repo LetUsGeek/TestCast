@@ -1,9 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neucha">
+
     <style type="text/css">
         body {
             overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #divers_gauche {
+            color:red;
+            background-color: E5E5E5;
+            display : flex;
+            align-items:center;
+            justify-content : center;
+            flex: 1;
+            /* float: left;
+            width: 40%; 
+            height: 100%; */
+            background-color: #C9C4E2; 
+
+        } 
+
+        #imagineBoard-container {
+            width: 60%;
+            justify-content: center;
+            /* float: left; */
+            background-color: #C9C4E2; 
+            border: solid #5B6DCD 7px;
+        }
+
+        #imagineBoard {
+            /* width:750;
+            height:750;  */
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        #divers_droite {
+            display : flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content : center;
+            color:red;
+            background-color: E5E5E5;
+            flex: 1;
+            height: 100%;
+            /* float: left;
+            width: 40%; 
+            height: 100%; */
+            background-color: #C9C4E2; 
+
+        } 
+
+        #div_timer{
+            flex:1;
+            /* width: 100%;  */
+            text-align: center; 
+            font: 10em monospace; 
+            color: #340E57;
+        }
+
+        #display_player{
+            flex : 1;
+            background-color: #9690CD;
+            color : #350B56;
+            display :flex;
+            align-items:center;
+            justify-content : center;
+            text-align: center;
+            font-family:'Neucha', sans-serif;
+            font-size: x-large;
+            width: 50%;
+            height: 50px;
+            border-radius: 20px;
+        }
+
+        #display_score{
+            flex : 3;
+            background-color: #9690CD;
+            color : #350B56;
+            display :flex;
+            align-items:center;
+            justify-content : center;
+            text-align: center;
+            font-family:'Neucha', sans-serif;
+            width: 50%;
+            height: 200px;
+            border-radius: 20px;
         }
 
         #debug {
@@ -104,27 +194,46 @@
 <body>
     <!-- <iframe src="http://www.pocketdivxencoder.net" height="800" width="800"></iframe> -->
 
-
-<div id="imagineBoard-container" style="width: 60%;float: left;background-color: #C9C4E2; border: solid #5B6DCD 7px;">
-    <canvas id="imagineBoard" width="750" height="750" style="width: 100%;height: 100%;">
+<div id = "divers_gauche">
+    <div id="imagineBoard-container">
+        <canvas id="imagineBoard">
+            
+        </canvas>
         
-    </canvas>
-    
+    </div>
+
 </div>
 
-<div id = "divers_droite" style="color:red;float: left;width: 10%; background-color: #C9C4E2; height: 100%;">
+<div id = "divers_droite" >
     
-    <div id = "div_timer" style="width: 100%; text-align: center; font: 10em monospace; color: #340E57;">
+    <div id="haut-droite">
+        <img src='img/logo1024.png' style="max-width:150px;display:block;margin-left:auto;margin-right:auto;">
+    </div>
+    <div id = "div_timer" >
+        00:00:00
         <!-- Timer de Nicho Buibui -->
-
     </div>
-    <div>
+    <div id ="display_player">
+        MARION EST EN TRAIN D'EMPILER
+    </div>
+    <div id ="test_bouton">
         <input class="favorite styled"
-           type="button"
-           value="Commande 4"
-           onclick="generateMessageNicho('left')"
-           style="width: 100%; text-align: center;">
+        type="button"
+        value="Commande 6"
+        onclick="generateMessageNicho('left')"
+        style="width: 100%; text-align: center;">
     </div>
+    <div id ="display_score">
+        MARION - 15 points <br>
+        Nicho - 14 points <br>
+        Tonio - 9 points <br>
+        Claire - 7 points <br>
+        Fred - 3 points <br>
+        Buibui - 1 point <br>
+        Guillaume - 0 point <br>
+        Bruno - 0 point 
+    </div>
+    <div id="log_nicho"></div>
 </div>
 
 
@@ -136,7 +245,7 @@
 
 <!-- <div id="debug"></div> -->
 
-<div id="winner">
+<!-- <div id="winner">
     <h1>Congratulation</h1>
     <div id="winner-color"></div>
     <br/>
@@ -161,7 +270,7 @@
             </li>
         </ul>
     </div>
-</div>
+</div> -->
 
 <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
 <script type="text/javascript" src="lodash.min.js"></script>
@@ -169,6 +278,6 @@
 <!-- <script type="text/javascript" src="game.js"></script> -->
 <script type="text/javascript" src="imaginegame.js"></script>
 <script type="text/javascript" src="cast.js"></script>
-<script type="text/javascript" src="planet.js"></script>
+<!-- <script type="text/javascript" src="planet.js"></script> -->
 </body>
 </html>
