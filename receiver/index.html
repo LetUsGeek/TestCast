@@ -59,12 +59,29 @@
 
         } 
 
+        #other {
+            display : flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content : center;
+            color:red;
+            background-color: E5E5E5;
+            flex: 1;
+            height: 100%;
+            /* float: left;
+            width: 40%; 
+            height: 100%; */
+            background-color: #C9C4E2; 
+
+        } 
+
         #div_timer{
             flex:1;
             /* width: 100%;  */
-            text-align: center; 
+            text-align: left; 
             font: 10em monospace; 
             color: #340E57;
+            font-size: xx-small;
         }
 
         #display_player{
@@ -104,7 +121,10 @@
             height: 100%;
             background-color: #EEE;
             padding: 10px;
-            overflow: hidden;
+            /* overflow: hidden; */
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            font-size: xx-small;
         }
 
         #maze {
@@ -214,7 +234,7 @@
         <!-- Timer de Nicho Buibui -->
     </div>
     <div id ="display_player">
-        MARION EST EN TRAIN D'EMPILER
+        Test MARION EST EN TRAIN D'EMPILER
     </div>
     <div id ="test_bouton">
         <input class="favorite styled"
@@ -224,26 +244,26 @@
         style="width: 100%; text-align: center;">
     </div>
     <div id ="display_score">
-        MARION - 15 points <br>
+        <!-- MARION - 15 points <br>
         Nicho - 14 points <br>
         Tonio - 9 points <br>
         Claire - 7 points <br>
         Fred - 3 points <br>
         Buibui - 1 point <br>
         Guillaume - 0 point <br>
-        Bruno - 0 point 
+        Bruno - 0 point  -->
     </div>
     <div id="log_nicho"></div>
 </div>
 
-
+<div id="other"></div>
 
 
 <!-- <div id="maze-container">
     <canvas oncontextmenu="return false;" id="maze" width="750" height="750"></canvas>
 </div> -->
 
-<!-- <div id="debug"></div> -->
+<div id="debug"></div>
 
 <!-- <div id="winner">
     <h1>Congratulation</h1>

@@ -38,7 +38,7 @@ $(document).ready(function () {
     };
 
     window.messageBus.onMessage = function (event) {
-        log('Message Nicho [' + event.senderId + '] ' + event.data);
+        log('Message:' + event.data);
         handleMessage(event.data, event.senderId);
         // var tonImage = document.createElement("img");
         // tonImage.setAttribute("src", "https://www.lug-grandfougeray.fr/wp-content/uploads/2019/12/Logo-LUG-web1_v1-e1575273875713.png");
