@@ -125,7 +125,7 @@ function generateMessageNicho(data){
         let refreshPeriod = 1000;
         setTimeout(function run() {
           let messageTest = 'I|1:0:0:200:200:0:1:1|2:90:132:100:100:60:1:1|3:-90:-100:50:50:-75:-1:1';
-            // if(i%50==0){
+            // if(i%1==0){
             //     // console.log('timerTest Avant',timerTest);
             //     timerTest = Date.now()-dateTemp;
             //     dateTemp=Date.now();
@@ -134,6 +134,7 @@ function generateMessageNicho(data){
             // }
             i++;
             messageTest = 'I|1:'+(-0.2*i)+':'+(-0.1*i)+':200:200:0:1:1|2:90:132:'+(100+i)+':'+(100+i)+':60:1:1|3:-90:-100:50:50:'+i+':-1:1';
+            // console.log("i = ",i," messageTest = ",messageTest, "timerTest =", timerTest);
           handleMessage(messageTest,'Nicho_Id');
           setTimeout(run, refreshPeriod);
         }, refreshPeriod);
@@ -173,13 +174,17 @@ function handleMessage(myData, mySenderId) {
     
     switch (myData[0]) {
         case 'I' :
+            // console.log('myData = ',myData);
             displayImages(myData, mySenderId);
             i_display++;
-            // console.log("i_display=",i_display);
-            if(i_display%50==0){
+            let modulo=2;
+            console.log("i_display=",i_display);
+            if(i_display%modulo==0){
                 timerTest = Date.now()-dateTemp;
                 dateTemp=Date.now();
-                document.getElementById('div_timer').innerHTML = timerTest;
+                let dateTemp2 = new Date;
+                let dateTempFormated = String(dateTemp2.getHours()).padStart(2,'0') + ":" + String(dateTemp2.getMinutes()).padStart(2,'0') + ":" + String(dateTemp2.getSeconds()).padStart(2,'0');
+                document.getElementById('div_timer').innerHTML = 'last I message date : '+ dateTempFormated + '<br>' +  'last I message raw date : '+ dateTemp +'<br>'+ 'delay between ' + modulo + ' I messages = ' + timerTest +'<br>'+ 'last I message received = ' + myData;
             }
             break;
         case 'T' :
