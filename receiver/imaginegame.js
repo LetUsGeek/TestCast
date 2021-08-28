@@ -14,6 +14,7 @@ const numImages = 41;
 var timerTest = Date.now();
 var dateTemp = Date.now();
 var i_display = 1;
+var intervalSend = undefined;
 
 var datestart= Date.now();
 
@@ -24,7 +25,9 @@ var origin = 1 ; // origine au centre du canevas pour les translations
 
 
 function newImagineBoard() {
-   if (document.body)
+    // window.location.reload(true);
+    
+    if (document.body)
         {
         var larg = screen.availWidth;
         console.log("larg",larg);
@@ -32,6 +35,31 @@ function newImagineBoard() {
         console.log("haut",haut);
         cast_gameAreaSize = [haut, Math.round(phone_gameAreaSize[1]*haut/phone_gameAreaSize[0])];
         cast_divers_droiteAreaSize = [haut, Math.round(window.innerWidth-cast_gameAreaSize[1])];
+
+        var temps9 = window.devicePixelRatio; 
+        var temps1 = window.innerHeight; 
+        var temps2 = window.innerWidth;
+        var temps3 = window.availHeight;
+        var temps4 = window.availWidth;  
+        var temps5 = screen.height; 
+        var temps6 = screen.width;
+        var temps7 = screen.availHeight;
+        var temps8 = screen.availWidth;
+
+        // document.getElementById('display_score').innerHTML = temps1 + ' x ' + temps2 + '<br>' + temps3 + ' x ' + temps4 + '<br>' + temps5 + ' x ' + temps6 + '<br>' + temps7 + ' x ' + temps8 + '<br>' + temps9 ;
+
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.width = ' + screen.width;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.height = ' + screen.height;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' document.querySelector(html).clientWidth = ' + document.querySelector('html').clientWidth;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' document.querySelector(html).clientHeight = ' + document.querySelector('html').clientHeight;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.innerWidth = ' + window.innerWidth;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.innerHeight = ' + window.innerHeight;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.availWidth = ' + screen.availWidth;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.availHeight = ' + screen.availHeight;
+        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.devicePixelRatio = ' + window.devicePixelRatio;
+
+        
+
         }
     console.log("cast_gameAreaSize = ",cast_gameAreaSize);
     console.log("cast_divers_droiteAreaSize = ",cast_divers_droiteAreaSize);
@@ -69,6 +97,10 @@ function newImagineBoard() {
         //     }
         // }
     }   
+
+    setInterval(() => {
+        displayTimer();
+    }, 5000);
        
 }
 
@@ -122,8 +154,8 @@ function generateMessageNicho(data){
         // }, 200); 
 
         let i = 1;
-        let refreshPeriod = 1000;
-        setTimeout(function run() {
+        let refreshPeriod = 100;
+        intervalSend = setTimeout(function run() {
           let messageTest = 'I|1:0:0:200:200:0:1:1|2:90:132:100:100:60:1:1|3:-90:-100:50:50:-75:-1:1';
             // if(i%1==0){
             //     // console.log('timerTest Avant',timerTest);
@@ -133,10 +165,10 @@ function generateMessageNicho(data){
             //     console.log("i = ",i," messageTest = ",messageTest, "timerTest =", timerTest);
             // }
             i++;
-            messageTest = 'I|1:'+(-0.2*i)+':'+(-0.1*i)+':200:200:0:1:1|2:90:132:'+(100+i)+':'+(100+i)+':60:1:1|3:-90:-100:50:50:'+i+':-1:1';
+            messageTest = 'I|14:'+Math.round(-0.2*i)+':'+Math.round(-0.1*i)+':200:200:0:1:1|2:90:132:'+(100+i)+':'+(100+i)+':60:1:1|3:-90:-100:50:50:'+i+':-1:1';
             // console.log("i = ",i," messageTest = ",messageTest, "timerTest =", timerTest);
           handleMessage(messageTest,'Nicho_Id');
-          setTimeout(run, refreshPeriod);
+          intervalSend = setTimeout(run, refreshPeriod);
         }, refreshPeriod);
         
         //   handleMessage('I|18:275:375:100:100:-30:1:1|24:375:375:100:100:45:1:1','Nicho_Id')
@@ -148,6 +180,10 @@ function generateMessageNicho(data){
           break;
         case 'right':
             console.log('Direction = droite');
+            if(intervalSend!=undefined){
+                console.log("Arret de l'envoi périodique des castMessage");
+                clearInterval(intervalSend);	//Permet de supprimer la commande régulière de createCastMessage
+              }
             break;
         case 'up':
             console.log('Direction = haut');
@@ -184,7 +220,7 @@ function handleMessage(myData, mySenderId) {
                 dateTemp=Date.now();
                 let dateTemp2 = new Date;
                 let dateTempFormated = String(dateTemp2.getHours()).padStart(2,'0') + ":" + String(dateTemp2.getMinutes()).padStart(2,'0') + ":" + String(dateTemp2.getSeconds()).padStart(2,'0');
-                document.getElementById('div_timer').innerHTML = 'last I message date : '+ dateTempFormated + '<br>' +  'last I message raw date : '+ dateTemp +'<br>'+ 'delay between ' + modulo + ' I messages = ' + timerTest +'<br>'+ 'last I message received = ' + myData;
+                document.getElementById('div_timer').innerHTML = 'last I message date : '+ dateTempFormated + '<br>' +  'last I message raw date : '+ dateTemp +'<br>'+ 'delay between ' + modulo + ' I messages = ' + timerTest +'<br>'+ 'last I message received = ' + myData.substring(0,50) + '...';
             }
             break;
         case 'T' :
@@ -233,14 +269,14 @@ function updateGameAreaSize(myData, mySenderId) {
 }
 
 function displayTimer(myData, mySenderId) {
-    var tableau_timer = myData.split("|");
+    // var tableau_timer = myData.split("|");
 
     var d = new Date();
     var hours = String(d.getHours()).padStart(2,'0') + ":" + String(d.getMinutes()).padStart(2,'0') + ":" + String(d.getSeconds()).padStart(2,'0');
     console.log(hours);
 
     // document.getElementById('div_timer').innerHTML = tableau_timer[1];
-    document.getElementById('div_timer').innerHTML = hours;
+    document.getElementById('div_timer').innerHTML = 'Update heure du receiver = ' + hours + '<br>' + document.getElementById('div_timer').innerHTML;
     
 }
 
@@ -261,13 +297,11 @@ function displayImages(myData, mySenderId) {
     for (var i=1; i<tableau_parametres_images.length; i++) { 
         var current_image_parameters = tableau_parametres_images[i].split(":");
         var current_image_id = current_image_parameters[0];
-        // current_image_parameters[1] = Math.pow(-1,i)*(1*current_image_parameters[1] + 3*buibuiGlobal);
-        // current_image_parameters[2] = Math.pow(-1,i)*(1*current_image_parameters[1] + 1*buibuiGlobal);
-        // current_image_parameters[5] = Math.pow(-1,i)*(1*current_image_parameters[1] + 10*buibuiGlobal);
             if (i == 1)
             {
                 mycontext2.clearRect(0,0, mycanvas.width,mycanvas.height);
-                mycontext2.strokeRect(0,0, mycanvas.width,mycanvas.height);
+                mycontext2.strokeStyle = 'green';
+                // mycontext2.strokeRect(0,0, mycanvas.width,mycanvas.height);
             }
             mycontext2.save();
             // console.log('origin',origin);
@@ -294,7 +328,7 @@ function displayImages(myData, mySenderId) {
             mycontext2.restore(); 
 
             mycontext.clearRect(0,0, mycanvas.width,mycanvas.height);
-            mycontext.strokeRect(0,0, mycanvas.width,mycanvas.height);
+            // mycontext.strokeRect(0,0, mycanvas.width,mycanvas.height);
             mycontext.drawImage(mycanvas2, 0, 0);
     }   
 
