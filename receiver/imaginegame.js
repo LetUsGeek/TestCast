@@ -46,17 +46,15 @@ function newImagineBoard() {
         var temps7 = screen.availHeight;
         var temps8 = screen.availWidth;
 
-        // document.getElementById('display_score').innerHTML = temps1 + ' x ' + temps2 + '<br>' + temps3 + ' x ' + temps4 + '<br>' + temps5 + ' x ' + temps6 + '<br>' + temps7 + ' x ' + temps8 + '<br>' + temps9 ;
-
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.width = ' + screen.width;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.height = ' + screen.height;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' document.querySelector(html).clientWidth = ' + document.querySelector('html').clientWidth;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' document.querySelector(html).clientHeight = ' + document.querySelector('html').clientHeight;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.innerWidth = ' + window.innerWidth;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.innerHeight = ' + window.innerHeight;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.availWidth = ' + screen.availWidth;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.availHeight = ' + screen.availHeight;
-        document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.devicePixelRatio = ' + window.devicePixelRatio;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.width = ' + screen.width;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.height = ' + screen.height;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' document.querySelector(html).clientWidth = ' + document.querySelector('html').clientWidth;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' document.querySelector(html).clientHeight = ' + document.querySelector('html').clientHeight;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.innerWidth = ' + window.innerWidth;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.innerHeight = ' + window.innerHeight;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.availWidth = ' + screen.availWidth;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' screen.availHeight = ' + screen.availHeight;
+        // document.getElementById('display_score').innerHTML = document.getElementById('display_score').innerHTML + '<br>' + ' window.devicePixelRatio = ' + window.devicePixelRatio;
 
         
 
