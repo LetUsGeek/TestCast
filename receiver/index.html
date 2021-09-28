@@ -13,6 +13,12 @@
             justify-content: center;
         }
 
+        table, th, td {
+            padding: 10px;
+            border: 1px solid #888888;
+            border-collapse: collapse;
+        }
+
         #divers_gauche {
             color:red;
             background-color: E5E5E5;
@@ -86,6 +92,15 @@
         } 
 
         #div_timer{
+            flex:1;
+            /* width: 100%;  */
+            text-align: left; 
+            font: 10em monospace; 
+            color: #340E57;
+            font-size: xx-small;
+        }
+
+        #div_indice{
             flex:1;
             /* width: 100%;  */
             text-align: left; 
@@ -248,8 +263,29 @@
         00:00:00
         <!-- Timer de Nicho Buibui -->
     </div>
+    <div id = "div_indice" >
+        Indice
+        <!-- Indice de Nicho Buibui -->
+    </div>
     <div id ="display_player">
-        Test MARION EST EN TRAIN D'EMPILER
+        <table>
+            <tr>
+                <td>MARION</td>
+                <td>12</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Nicho</td>
+                <td>17</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Buibui</td>
+                <td>2</td>
+                <td>Stacker</td>
+            </tr>
+        </table>
+        <!-- Test MARION EST EN TRAIN D'EMPILER -->
     </div>
     <div id ="test_bouton">
         <input class="favorite styled"

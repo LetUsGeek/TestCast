@@ -143,6 +143,12 @@ function generateMessageNicho(data){
 
         //   var timerintervalID = window.setInterval(handleMessage, 100, 'T|05:49', 'Nicho_Id');
         handleMessage('D|5300:3600|1', 'Nicho_Id');
+        handleMessage('S|nicho:12|buibui:7|tonio:-2|guigui:11');
+        handleMessage('T|04:32|#FF0000', 'Nicho_Id');
+        handleMessage('C|Hamburger', 'Nicho_Id');
+        
+        
+        
         // await delay(1000);
         // handleMessage('T|05:49', 'Nicho_Id');
         // handleMessage('P|Nicho&Tonio', 'Nicho_Id');
@@ -166,6 +172,9 @@ function generateMessageNicho(data){
             messageTest = 'I|14:'+Math.round(-0.2*i)+':'+Math.round(-0.1*i)+':200:200:0:1:1|2:90:132:'+(100+i)+':'+(100+i)+':60:1:1|3:-90:-100:50:50:'+i+':-1:1';
             // console.log("i = ",i," messageTest = ",messageTest, "timerTest =", timerTest);
           handleMessage(messageTest,'Nicho_Id');
+            // handleMessage('I|1:0:0:200:200:0:1:1|2:90:132:100:100:60:1:1', 'Nicho_Id');
+            // handleMessage('I', 'Nicho_Id');
+
           intervalSend = setTimeout(run, refreshPeriod);
         }, refreshPeriod);
         
@@ -210,25 +219,29 @@ function handleMessage(myData, mySenderId) {
         case 'I' :
             // console.log('myData = ',myData);
             displayImages(myData, mySenderId);
-            i_display++;
-            let modulo=2;
-            console.log("i_display=",i_display);
-            if(i_display%modulo==0){
-                timerTest = Date.now()-dateTemp;
-                dateTemp=Date.now();
-                let dateTemp2 = new Date;
-                let dateTempFormated = String(dateTemp2.getHours()).padStart(2,'0') + ":" + String(dateTemp2.getMinutes()).padStart(2,'0') + ":" + String(dateTemp2.getSeconds()).padStart(2,'0');
-                document.getElementById('div_timer').innerHTML = 'last I message date : '+ dateTempFormated + '<br>' +  'last I message raw date : '+ dateTemp +'<br>'+ 'delay between ' + modulo + ' I messages = ' + timerTest +'<br>'+ 'last I message received = ' + myData.substring(0,50) + '...';
-            }
+            // //Affichage des logs à la place du timer
+            // i_display++;
+            // let modulo=2;
+            // console.log("i_display=",i_display);
+            // if(i_display%modulo==0){
+            //     timerTest = Date.now()-dateTemp;
+            //     dateTemp=Date.now();
+            //     let dateTemp2 = new Date;
+            //     let dateTempFormated = String(dateTemp2.getHours()).padStart(2,'0') + ":" + String(dateTemp2.getMinutes()).padStart(2,'0') + ":" + String(dateTemp2.getSeconds()).padStart(2,'0');
+            //     document.getElementById('div_timer').innerHTML = 'last I message date : '+ dateTempFormated + '<br>' +  'last I message raw date : '+ dateTemp +'<br>'+ 'delay between ' + modulo + ' I messages = ' + timerTest +'<br>'+ 'last I message received = ' + myData.substring(0,50) + '...';
+            // }
             break;
         case 'T' :
             displayTimer(myData, mySenderId);
             break;
+        case 'C' :
+            displayClue(myData, mySenderId);
+            break;
         case 'D' :
             updateGameAreaSize(myData, mySenderId);
             break;
-        case 'P' :
-            updatePlayer(myData, mySenderId);
+        case 'S' :
+            updateScorePlayer(myData, mySenderId);
             break;
         default :
             console.log('Undefined message received '+myData);
@@ -237,12 +250,24 @@ function handleMessage(myData, mySenderId) {
     
 };
 
-function updatePlayer(myData, mySenderId){
+function updateScorePlayer(myData, mySenderId){
     var tableau_player = myData.split("|");
+    var tableauHTMLplayer = "<table>";
 
-    var playerName = tableau_player[1];
+
+    for (var i=1; i<tableau_player.length; i++) { 
+        var current_player_parameters = tableau_player[i].split(":");
+        tableauHTMLplayer = tableauHTMLplayer + "<tr><td>"+ current_player_parameters[0] + "</td><td>"+ current_player_parameters[1] + "</td><td>";
+        if (i==1)
+            {
+                tableauHTMLplayer = tableauHTMLplayer+"stacker";
+            }
+        tableauHTMLplayer = tableauHTMLplayer+"</td></tr>";
+
+    }
+    tableauHTMLplayer = tableauHTMLplayer+"</table>";
     
-    document.getElementById('display_player').innerHTML = playerName+" est en train d'empiler";
+    document.getElementById('display_player').innerHTML = tableauHTMLplayer;
 }
 
 function updateGameAreaSize(myData, mySenderId) {
@@ -267,14 +292,21 @@ function updateGameAreaSize(myData, mySenderId) {
 }
 
 function displayTimer(myData, mySenderId) {
-    // var tableau_timer = myData.split("|");
+    var tableau_timer = myData.split("|");
 
-    var d = new Date();
-    var hours = String(d.getHours()).padStart(2,'0') + ":" + String(d.getMinutes()).padStart(2,'0') + ":" + String(d.getSeconds()).padStart(2,'0');
-    console.log(hours);
+    // var d = new Date();
+    // var hours = String(d.getHours()).padStart(2,'0') + ":" + String(d.getMinutes()).padStart(2,'0') + ":" + String(d.getSeconds()).padStart(2,'0');
+    // console.log(hours);
+    // document.getElementById('div_timer').innerHTML = 'Update heure du receiver = ' + hours + '<br>' + document.getElementById('div_timer').innerHTML;
 
-    // document.getElementById('div_timer').innerHTML = tableau_timer[1];
-    document.getElementById('div_timer').innerHTML = 'Update heure du receiver = ' + hours + '<br>' + document.getElementById('div_timer').innerHTML;
+    document.getElementById('div_timer').innerHTML = "<font style='font-size:11em; color:"+tableau_timer[2]+";'>" + tableau_timer[1]+"</font>";
+    
+}
+
+function displayClue(myData, mySenderId) {
+    var tableau_clue = myData.split("|");
+
+    document.getElementById('div_indice').innerHTML = "<font style='font-size:7em; color:black;'>" + tableau_clue[1]+"</font>";
     
 }
 
@@ -291,7 +323,13 @@ function displayImages(myData, mySenderId) {
     
     buibuiGlobal = buibuiGlobal + 1;
     buibuiGlobal = 0;
+
+    if (tableau_parametres_images.length==1){
+        mycontext.clearRect(0,0, mycanvas.width,mycanvas.height);
+    }
     
+
+
     for (var i=1; i<tableau_parametres_images.length; i++) { 
         var current_image_parameters = tableau_parametres_images[i].split(":");
         var current_image_id = current_image_parameters[0];
