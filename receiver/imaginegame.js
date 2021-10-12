@@ -29,9 +29,9 @@ function newImagineBoard() {
     
     if (document.body)
         {
-        var larg = screen.availWidth;
+        var larg = window.innerWidth;
         console.log("larg",larg);
-        var haut = screen.availHeight;
+        var haut = window.innerHeight;
         console.log("haut",haut);
         cast_gameAreaSize = [haut, Math.round(phone_gameAreaSize[1]*haut/phone_gameAreaSize[0])];
         cast_divers_droiteAreaSize = [haut, Math.round(window.innerWidth-cast_gameAreaSize[1])];
@@ -68,7 +68,7 @@ function newImagineBoard() {
     document.getElementById('divers_droite').style.width = cast_divers_droiteAreaSize[1]+"px";
     document.getElementById('divers_droite').style.height = cast_divers_droiteAreaSize[0]+"px";
     
-    document.getElementById('imagineBoard-container').innerHTML = "<canvas id='imagineBoard' width='1000' height='1000' style='width:100%;height: 100%;'></canvas>";
+    document.getElementById('imagineBoard-container').innerHTML = "<canvas id='imagineBoard' style='width:100%;height: 100%;'></canvas>";
     mycanvas = document.getElementById('imagineBoard');
     console.log('Mise à jour de la taille de l ecran')
     mycanvas.width=phone_gameAreaSize[1];
@@ -145,7 +145,7 @@ function generateMessageNicho(data){
         handleMessage('D|5300:3600|1', 'Nicho_Id');
         handleMessage('S|nicho:12|buibui:7|tonio:-2|guigui:11');
         handleMessage('T|04:32|#FF0000', 'Nicho_Id');
-        handleMessage('C|Hamburger', 'Nicho_Id');
+        handleMessage('C|Nourriture', 'Nicho_Id');
         
         
         
@@ -299,14 +299,14 @@ function displayTimer(myData, mySenderId) {
     // console.log(hours);
     // document.getElementById('div_timer').innerHTML = 'Update heure du receiver = ' + hours + '<br>' + document.getElementById('div_timer').innerHTML;
 
-    document.getElementById('div_timer').innerHTML = "<font style='font-size:11em; color:"+tableau_timer[2]+";'>" + tableau_timer[1]+"</font>";
+    document.getElementById('div_timer').innerHTML = "<font style='color:"+tableau_timer[2]+";'>" + tableau_timer[1]+"</font>";
     
 }
 
 function displayClue(myData, mySenderId) {
     var tableau_clue = myData.split("|");
 
-    document.getElementById('div_indice').innerHTML = "<font style='font-size:7em; color:black;'>" + tableau_clue[1]+"</font>";
+    document.getElementById('div_indice').innerHTML = tableau_clue[1];
     
 }
 

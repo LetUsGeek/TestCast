@@ -11,12 +11,19 @@
             flex-wrap: nowrap;
             align-items: center;
             justify-content: center;
+            margin: 0px;
         }
+
+        pre { font-family: 'Neucha'; text-transform: full-width; letter-spacing: .1em; }
 
         table, th, td {
             padding: 10px;
             border: 1px solid #888888;
             border-collapse: collapse;
+        }
+
+        .taLaClasse{
+            display : flex;
         }
 
         #divers_gauche {
@@ -54,8 +61,6 @@
             flex-direction: column;
             align-items:center;
             justify-content : center;
-            /* color:red; */
-            /* background-color: E5E5E5; */
             flex: 1;
             height: 100%;
             background-color: #9690CD;
@@ -65,7 +70,6 @@
             /* justify-content : center; */
             text-align: center;
             font-family:'Neucha', sans-serif;
-            font-size: xx-large;
 
 
             /* float: left;
@@ -73,6 +77,14 @@
             height: 100%; */
             background-color: #C9C4E2; 
 
+        } 
+
+        #haut_droite {
+            display : flex;
+            flex-direction: row;
+            align-items:center;
+            justify-content : center;
+            flex: 1;
         } 
 
         #other {
@@ -93,24 +105,34 @@
 
         #div_timer{
             flex:1;
-            /* width: 100%;  */
-            text-align: left; 
-            font: 10em monospace; 
+            justify-content: center;
+            align-items: center;
+            font: 100px monospace; 
+            /* font-family: 'Neucha'; text-transform: full-width; letter-spacing: 10px;  */
             color: #340E57;
-            font-size: xx-small;
         }
 
+        #div_logo{
+            flex:1;
+        }
         #div_indice{
             flex:1;
-            /* width: 100%;  */
-            text-align: left; 
-            font: 10em monospace; 
+            justify-content: center;
+            align-items: center;
+            font-size: 70px; 
             color: #340E57;
-            font-size: xx-small;
+
+            background-color: #9690CD;
+            color : #350B56;
+            display :flex;
+            border-radius: 20px;
+            width: 80%;
+            margin:10px;
+
         }
 
         #display_player{
-            flex : 1;
+            flex : 8;
             background-color: #9690CD;
             color : #350B56;
             display :flex;
@@ -119,7 +141,7 @@
             text-align: center;
             font-family:'Neucha', sans-serif;
             font-size: x-large;
-            width: 50%;
+            width: 80%;
             height: 50px;
             border-radius: 20px;
         }
@@ -251,19 +273,18 @@
 
 <div id = "divers_droite" >
     
-    <div id="haut-droite">
-        <br>
-        STACK HOUSE
-        <br>
-        <img src='img/logo1024.png' style="max-width:150px;display:block;margin-left:auto;margin-right:auto;">
-        <br>
+    <div id="haut-droite" class="taLaClasse">
+        <div id="div_logo" style="display:flex; flex-direction: column; justify-content: center;align-items: center;">
+            <img src='img/logo 5-pleinformat-stackhouse (final)1024.png' style="width:80%;">
+        </div>
+
+        <div id = "div_timer" class="taLaClasse">
+                00:00
+            <!-- Timer de Nicho Buibui -->
+        </div>
         
     </div>
-    <div id = "div_timer" >
-        00:00:00
-        <!-- Timer de Nicho Buibui -->
-    </div>
-    <div id = "div_indice" >
+    <div id = "div_indice" class="taLaClasse">
         Indice
         <!-- Indice de Nicho Buibui -->
     </div>
@@ -287,14 +308,14 @@
         </table>
         <!-- Test MARION EST EN TRAIN D'EMPILER -->
     </div>
-    <div id ="test_bouton">
+    <div id ="test_bouton1" style="position: absolute; left:0; top:0;">
         <input class="favorite styled"
         type="button"
         value="Commande 6"
         onclick="generateMessageNicho('left')"
         style="width: 100%; text-align: center;">
     </div>
-    <div id ="test_bouton">
+    <div id ="test_bouton2" style="position: absolute; left:0;bottom:0;">
         <input class="favorite styled"
         type="button"
         value="Commande 7"
