@@ -16,14 +16,15 @@
 
         pre { font-family: 'Neucha'; text-transform: full-width; letter-spacing: .1em; }
 
-        table, th, td {
+        /* table, th, td {
             padding: 10px;
             border: 1px solid #888888;
             border-collapse: collapse;
-        }
+        } */
 
         .taLaClasse{
             display : flex;
+            margin: 20px;
         }
 
         #divers_gauche {
@@ -127,7 +128,7 @@
             display :flex;
             border-radius: 20px;
             width: 80%;
-            margin:10px;
+            margin:30px;
 
         }
 
@@ -144,6 +145,7 @@
             width: 80%;
             height: 50px;
             border-radius: 20px;
+            margin: 20px;
         }
 
         #display_score{
@@ -159,6 +161,38 @@
             height: 200px;
             border-radius: 20px;
         }
+
+
+        .tablescores {
+            border: none;
+            border-collapse: collapse;
+			font-size: 70px;
+			font-family: Neucha;
+			background-color: #9690CD;
+        }
+		.tabledecentrage {
+			margin-left: auto;
+			margin-right: auto;
+			vertical-align: middle;
+			height: 100%;
+		}
+		.columnscore {
+            padding: 8px 0px;
+		    text-align: right;
+        }
+		.colstacker {
+		    padding: 8px 8px;
+        }
+		.colnames {
+		    padding: 8px 60px 8px 8px;
+        }
+		.rowstacker {
+		    color: #350B56;
+		}
+		.rowpasstacker {
+		    color: #504060;
+		}
+
 
         #debug {
             position: absolute;
@@ -289,24 +323,29 @@
         <!-- Indice de Nicho Buibui -->
     </div>
     <div id ="display_player">
-        <table>
+        <table class="tabledecentrage">
             <tr>
-                <td>MARION</td>
-                <td>12</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>Nicho</td>
-                <td>17</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>Buibui</td>
-                <td>2</td>
-                <td>Stacker</td>
+                <td>
+                    <table class="tablescores">
+                        <tr class="rowpasstacker">
+                            <td class="colstacker">&nbsp;</td>
+                            <td class="colnames">Marion</td>
+                            <td class="columnscore">12</td>
+                        </tr>
+                        <tr class="rowpasstacker">
+                            <td class="colstacker">&nbsp;</td>
+                            <td class="colnames">Nicho</td>
+                            <td class="columnscore">24</td>
+                        </tr>
+                        <tr class="rowstacker">
+                            <td class="colstacker"><img src="./img/toque.png" height=140 width=140></img></td>
+                            <td class="colnames">Buibui</td>
+                            <td class="columnscore">2</td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
         </table>
-        <!-- Test MARION EST EN TRAIN D'EMPILER -->
     </div>
     <div id ="test_bouton1" style="position: absolute; left:0; top:0;">
         <input class="favorite styled"

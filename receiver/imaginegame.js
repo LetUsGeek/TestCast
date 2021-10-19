@@ -145,7 +145,7 @@ function generateMessageNicho(data){
         handleMessage('D|5300:3600|1', 'Nicho_Id');
         handleMessage('S|nicho:12|buibui:7|tonio:-2|guigui:11');
         handleMessage('T|04:32|#FF0000', 'Nicho_Id');
-        handleMessage('C|Nourriture', 'Nicho_Id');
+        handleMessage('C|animal', 'Nicho_Id');
         
         
         
@@ -252,20 +252,21 @@ function handleMessage(myData, mySenderId) {
 
 function updateScorePlayer(myData, mySenderId){
     var tableau_player = myData.split("|");
-    var tableauHTMLplayer = "<table>";
-
+    var tableauHTMLplayer = "<table class=tabledecentrage><tr><td><table class=tablescores>";
 
     for (var i=1; i<tableau_player.length; i++) { 
         var current_player_parameters = tableau_player[i].split(":");
-        tableauHTMLplayer = tableauHTMLplayer + "<tr><td>"+ current_player_parameters[0] + "</td><td>"+ current_player_parameters[1] + "</td><td>";
         if (i==1)
-            {
-                tableauHTMLplayer = tableauHTMLplayer+"stacker";
-            }
-        tableauHTMLplayer = tableauHTMLplayer+"</td></tr>";
-
+        {
+                tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowstacker><td class=colstacker><img src=./img/toque.png height=140 width=140></img></td>";
+        }
+        else {
+            tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowpasstacker><td class=colstacker>&nbsp;</td>";
+        }
+                
+        tableauHTMLplayer = tableauHTMLplayer + "<td class=colnames>"+ current_player_parameters[0] + "</td><td class=columnscore>"+ current_player_parameters[1] + "</td></tr>";
     }
-    tableauHTMLplayer = tableauHTMLplayer+"</table>";
+    tableauHTMLplayer = tableauHTMLplayer+"</table></td></tr></table>";
     
     document.getElementById('display_player').innerHTML = tableauHTMLplayer;
 }
