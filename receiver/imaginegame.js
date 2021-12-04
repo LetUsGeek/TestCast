@@ -5,6 +5,7 @@ var mycanvas2;
 var mycontext2;
 var myImages = {};
 var modeOmbreChinoise = 0;
+var mode_jeu=0;
 var phone_gameAreaSize = [1024,760];
 var cast_gameAreaSize = [1024,760];
 var cast_divers_droiteAreaSize = [1024,760];
@@ -136,17 +137,27 @@ function generateMessageNicho(data){
         // Pour le Display D  
             // 1er champ: résolution du téléphone hauteur:largeur en nombre de pixels x10
             // 2ème champ : 1 pour mode "Ombre chinoise", 0 sinon 
+            // 3ème champ : Type de menu
+                    // 1 = Menu à volonté
+                    // 2 = Menu Classique
+                    // 3 = Menu du Chef
 
         case 'left':
           console.log('Direction = gauche');
         //   var intervalID = window.setInterval(handleMessage, 20, 'I|16:0:0:100:100:0:1:1|25:375:375:20:20:45:1:1|13:375:175:50:50:75:-1:1', 'Nicho_Id');
 
         //   var timerintervalID = window.setInterval(handleMessage, 100, 'T|05:49', 'Nicho_Id');
-        handleMessage('D|5300:3600|1', 'Nicho_Id');
+        handleMessage('D|5300:3600|1|3', 'Nicho_Id');
         handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2:7|tonio2:0|guigui2:110');
         // handleMessage('S|nicho:20000|buibuibuibuibuibuibuibuibuibui:7');
         
-        handleMessage('T|04:32|#FF0000', 'Nicho_Id');
+        handleMessage('T|04:32|#FF0000|5', 'Nicho_Id');
+        //Pour le Timer T
+            // 1er champ : mm:ss
+            // 2ème champ : couleur à afficher en hexa #xxxxxx
+            // 3ème champ : score restant pour le menu du chef (entre 0 et 5)
+
+
         handleMessage('C|expression', 'Nicho_Id');
         
         
@@ -323,13 +334,34 @@ function updateGameAreaSize(myData, mySenderId) {
         phone_gameAreaSize[0] = 0.1*temp_phone_gameAreaSize[0];
         phone_gameAreaSize[1] = 0.1*temp_phone_gameAreaSize[1];
         console.log("phone_gameAreaSize = ",phone_gameAreaSize);
+        if(tableau_gameAreaSize[2]==1){
+            modeOmbreChinoise = 1;
+        }
         newImagineBoard();
     }
 
-    if(tableau_gameAreaSize[2]==1){
-        modeOmbreChinoise = 1;
+
+    switch(tableau_gameAreaSize[3]){
+                // 3ème champ : Type de menu
+                    // 1 = Menu à volonté
+                    // 2 = Menu Classique
+                    // 3 = Menu du Chef
+        case '1':
+            console.log('1 = Menu à volonté');
+            mode_jeu=1;
+            break;
+        case '2':
+            console.log('2 = Menu Classique');
+            mode_jeu=2;
+            break;
+        case '3':
+            console.log('3 = Menu du Chef');
+            mode_jeu=3;
+            break;
+        default :
+            console.log('Menu inconnu');
+            mode_jeu=0;
     }
-    
 }
 
 function displayTimer(myData, mySenderId) {
@@ -341,6 +373,15 @@ function displayTimer(myData, mySenderId) {
     // document.getElementById('div_timer').innerHTML = 'Update heure du receiver = ' + hours + '<br>' + document.getElementById('div_timer').innerHTML;
 
     document.getElementById('div_timer').innerHTML = "<font style='color:"+tableau_timer[2]+";'>" + tableau_timer[1]+"</font>";
+    
+    if(mode_jeu==3){
+        document.getElementById('remaining_points').innerHTML = "Points en jeu : "+tableau_timer[3];
+    } else {
+        
+            var obj = document.getElementById('divers_droite');
+            var old = document.getElementById('remaining_points');
+            obj.removeChild(old);
+    }
     
 }
 
