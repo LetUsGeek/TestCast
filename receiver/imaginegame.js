@@ -148,7 +148,8 @@ function generateMessageNicho(data){
 
         //   var timerintervalID = window.setInterval(handleMessage, 100, 'T|05:49', 'Nicho_Id');
         handleMessage('D|5300:3600|1|3', 'Nicho_Id');
-        handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2:7|tonio2:0|guigui2:110');
+        // handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2:7|tonio2:0|guigui2:110');
+        handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11');
         // handleMessage('S|nicho:20000|buibuibuibuibuibuibuibuibuibui:7');
         
         handleMessage('T|04:32|#FF0000|5', 'Nicho_Id');
@@ -271,12 +272,12 @@ function updateScorePlayer(myData, mySenderId){
     var tableau_player = [];
     var tableau_player_temp = myData.split("|");
     var max_number_of_player_to_display = 12;
-    var fontSizeMin = 8;
+    var fontSizeMin = 4;
     var fontSizeMax = 70;
     // var temp1 = document.getElementById("display_player");
     // var temp2 = document.getElementById("display_player").style.height;
     // var temp3 = document.getElementById("display_player").clientHeight;
-    var fontSizeOfTableScore = Math.min(fontSizeMax,Math.max(fontSizeMin,0.9*(document.getElementById("display_player").clientHeight-16)/(Math.min(tableau_player_temp.length,max_number_of_player_to_display+2))-16));
+    var fontSizeOfTableScore = Math.min(fontSizeMax,Math.max(fontSizeMin,2*0.9*(document.getElementById("display_player").clientHeight-16)/(Math.min(tableau_player_temp.length,max_number_of_player_to_display+2))-16));
     var tableauHTMLplayer = "<table class=tabledecentrage><tr><td><table class=tablescores style='font-size:"+ fontSizeOfTableScore +"px;'>";
 
     //tableau_player est un tableau d'objets "player", chaque objet a trois propriétés : name, score, isStacker
@@ -300,8 +301,9 @@ function updateScorePlayer(myData, mySenderId){
           }
         return 0;
     })
-        
-    for (var i=0; i<Math.min(max_number_of_player_to_display,tableau_player.length); i++) { 
+    
+    var number_of_player_to_display = Math.min(max_number_of_player_to_display,tableau_player.length); 
+    for (var i=0; i<number_of_player_to_display; i++) { 
         if (tableau_player[i].isStacker)
         {
                 tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowstacker><td class=colstacker><img src=./img/toque.png height="+ fontSizeOfTableScore+"width="+fontSizeOfTableScore+"></img></td>";
@@ -311,7 +313,13 @@ function updateScorePlayer(myData, mySenderId){
         }
                 
         tableauHTMLplayer = tableauHTMLplayer + "<td class=colnames>"+ truncate(tableau_player[i].name,16) + "</td><td class=columnscore>"+ tableau_player[i].score + "</td></tr>";
+        if((number_of_player_to_display>4) && (i==Math.trunc((number_of_player_to_display+1)/2)-1))
+        {
+            tableauHTMLplayer = tableauHTMLplayer + "</table></td><td><table class=tablescores style='font-size:"+ fontSizeOfTableScore +"px;'>";
+        }
+        
     }
+    
     if (max_number_of_player_to_display<tableau_player.length)
     {
         tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowpasstacker><td></td><td class=colnames>&hellip;</td></tr>";
