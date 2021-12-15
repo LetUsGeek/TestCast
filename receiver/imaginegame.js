@@ -11,7 +11,7 @@ var cast_gameAreaSize = [1024,760];
 var cast_divers_droiteAreaSize = [1024,760];
 var img_phoneSize = 100;
 var ratio_img = img_phoneSize/512;
-const numImages = 41;
+const numImages = 50;
 var timerTest = Date.now();
 var dateTemp = Date.now();
 var i_display = 1;
@@ -147,10 +147,10 @@ function generateMessageNicho(data){
         //   var intervalID = window.setInterval(handleMessage, 20, 'I|16:0:0:100:100:0:1:1|25:375:375:20:20:45:1:1|13:375:175:50:50:75:-1:1', 'Nicho_Id');
 
         //   var timerintervalID = window.setInterval(handleMessage, 100, 'T|05:49', 'Nicho_Id');
-        handleMessage('D|5300:3600|1|3', 'Nicho_Id');
+        handleMessage('D|5300:3600|0|2', 'Nicho_Id');
         // handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2:7|tonio2:0|guigui2:110');
-        handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11');
-        // handleMessage('S|nicho:20000|buibuibuibuibuibuibuibuibuibui:7');
+        // handleMessage('S|nicho:2|buibui:7|tonio:-2|guigui:11|nicho2:11|buibui2buibui2buibui2buibui2buibui2buibui2:7|tonio2:0|guigui2:110|buibui:7|tonio:-2|guigui:11|nicho2:11');
+        handleMessage('S|nicho:20000|buibuibuibuibuibuibuibuibuibui:7|nicho:20000|buibuibuibuibuibuibuibuibuibui:7');
         
         handleMessage('T|04:32|#FF0000|5', 'Nicho_Id');
         //Pour le Timer T
@@ -183,7 +183,7 @@ function generateMessageNicho(data){
             //     console.log("i = ",i," messageTest = ",messageTest, "timerTest =", timerTest);
             // }
             i++;
-            messageTest = 'I|14:'+Math.round(-0.2*i)+':'+Math.round(-0.1*i)+':200:200:0:1:1|2:90:132:'+(100+i)+':'+(100+i)+':60:1:1|3:-90:-100:50:50:'+i+':-1:1';
+            messageTest = 'I|45:'+Math.round(-0.2*i)+':'+Math.round(-0.1*i)+':200:200:0:1:1|2:90:132:'+(100+i)+':'+(100+i)+':60:1:1|3:-90:-100:50:50:'+i+':-1:1';
             // console.log("i = ",i," messageTest = ",messageTest, "timerTest =", timerTest);
           handleMessage(messageTest,'Nicho_Id');
             // handleMessage('I|1:0:0:200:200:0:1:1|2:90:132:100:100:60:1:1', 'Nicho_Id');
@@ -269,65 +269,95 @@ function truncate(str, n){
   };
 
 function updateScorePlayer(myData, mySenderId){
+    
     var tableau_player = [];
     var tableau_player_temp = myData.split("|");
     var max_number_of_player_to_display = 12;
     var fontSizeMin = 4;
     var fontSizeMax = 70;
+    var maxCarNbInName = 16;
+    var maxPlayerNbInCol = 4;
+    // mycontext.fontSize = fontSizeMax;
+    // while(document.getElementById("display_player").clientWidth<1.25*2*16*mycontext.measureText('W').width)
+    // {
+    //     fontSizeMax--;
+    //     mycontext.fontSize=fontSizeMax;
+    // }
     // var temp1 = document.getElementById("display_player");
     // var temp2 = document.getElementById("display_player").style.height;
     // var temp3 = document.getElementById("display_player").clientHeight;
-    var fontSizeOfTableScore = Math.min(fontSizeMax,Math.max(fontSizeMin,2*0.9*(document.getElementById("display_player").clientHeight-16)/(Math.min(tableau_player_temp.length,max_number_of_player_to_display+2))-16));
-    var tableauHTMLplayer = "<table class=tabledecentrage><tr><td><table class=tablescores style='font-size:"+ fontSizeOfTableScore +"px;'>";
+    var fontSizeMax1Col = Math.min(fontSizeMax,document.getElementById("display_player").clientWidth/((maxCarNbInName+4)*1*0.5));
+    var fontSizeMax2Col = Math.min(fontSizeMax,document.getElementById("display_player").clientWidth/((maxCarNbInName+4)*2*0.5));
 
-    //tableau_player est un tableau d'objets "player", chaque objet a trois propriétés : name, score, isStacker
-
-    for (var i=1; i<tableau_player_temp.length; i++) { 
-        var current_player_parameters = tableau_player_temp[i].split(":");
-        tableau_player.push({name:current_player_parameters[0],score:current_player_parameters[1],isStacker:(i==1)});
-    }
-
-    tableau_player.sort(function compare(a, b) {
-        if (1*a.score < 1*b.score)
-           return 1;
-        if (1*a.score > 1*b.score)
-           return -1;
-        if (1*a.score == 1*b.score)
-          {
-            if (a.name < b.name)
-              return -1;
-            if (a.name > b.name)
-              return 1;
-          }
-        return 0;
-    })
+    var fontSizeOfTableScore = Math.min(fontSizeMax,Math.max(fontSizeMin,1*0.9*(document.getElementById("display_player").clientHeight-16)/(Math.min(tableau_player_temp.length,max_number_of_player_to_display+2))-16));
+    fontSizeOfTableScore = Math.min(fontSizeOfTableScore,fontSizeMax1Col);
+    if(tableau_player_temp.length>=maxPlayerNbInCol){
+        fontSizeOfTableScore=2*fontSizeOfTableScore;
+        fontSizeOfTableScore = Math.min(fontSizeOfTableScore,fontSizeMax2Col);
+    }    
     
-    var number_of_player_to_display = Math.min(max_number_of_player_to_display,tableau_player.length); 
-    for (var i=0; i<number_of_player_to_display; i++) { 
-        if (tableau_player[i].isStacker)
-        {
-                tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowstacker><td class=colstacker><img src=./img/toque.png height="+ fontSizeOfTableScore+"width="+fontSizeOfTableScore+"></img></td>";
+    
+    document.getElementById('test_bouton1').innerHTML = 'fontSize= '+ Math.trunc(fontSizeOfTableScore);
+    document.getElementById('test_bouton2').innerHTML = 'clientHeight= '+document.getElementById("display_player").clientHeight + ' clientWidth= '+document.getElementById("display_player").clientWidth;
+    
+    if(mode_jeu==1){
+        var obj = document.getElementById('divers_droite');
+        var old = document.getElementById('display_player');
+        obj.removeChild(old);
+    } else {
+        
+        
+        var tableauHTMLplayer = "<table class=tabledecentrage><tr><td><table class=tablescores style='font-size:"+ fontSizeOfTableScore +"px;'>";
+        //tableau_player est un tableau d'objets "player", chaque objet a trois propriétés : name, score, isStacker
+
+        for (var i=1; i<tableau_player_temp.length; i++) { 
+            var current_player_parameters = tableau_player_temp[i].split(":");
+            tableau_player.push({name:current_player_parameters[0],score:current_player_parameters[1],isStacker:(i==1)});
         }
-        else {
-            tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowpasstacker><td class=colstacker>&nbsp;</td>";
-        }
-                
-        tableauHTMLplayer = tableauHTMLplayer + "<td class=colnames>"+ truncate(tableau_player[i].name,16) + "</td><td class=columnscore>"+ tableau_player[i].score + "</td></tr>";
-        if((number_of_player_to_display>4) && (i==Math.trunc((number_of_player_to_display+1)/2)-1))
-        {
-            tableauHTMLplayer = tableauHTMLplayer + "</table></td><td><table class=tablescores style='font-size:"+ fontSizeOfTableScore +"px;'>";
+
+        tableau_player.sort(function compare(a, b) {
+            if (1*a.score < 1*b.score)
+            return 1;
+            if (1*a.score > 1*b.score)
+            return -1;
+            if (1*a.score == 1*b.score)
+            {
+                if (a.name < b.name)
+                return -1;
+                if (a.name > b.name)
+                return 1;
+            }
+            return 0;
+        })
+        
+        var number_of_player_to_display = Math.min(max_number_of_player_to_display,tableau_player.length); 
+        for (var i=0; i<number_of_player_to_display; i++) { 
+            if (tableau_player[i].isStacker)
+            {
+                    tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowstacker><td class=colstacker><img src=./img/toque.png height="+ fontSizeOfTableScore+"width="+fontSizeOfTableScore+"></img></td>";
+            }
+            else {
+                tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowpasstacker><td class=colstacker>&nbsp;</td>";
+            }
+                    
+            tableauHTMLplayer = tableauHTMLplayer + "<td class=colnames>"+ truncate(tableau_player[i].name,maxCarNbInName) + "</td><td class=columnscore>"+ tableau_player[i].score + "</td></tr>";
+            if((number_of_player_to_display>maxPlayerNbInCol) && (i==Math.trunc((number_of_player_to_display+1)/2)-1))
+            {
+                tableauHTMLplayer = tableauHTMLplayer + "</table></td><td><table class=tablescores style='font-size:"+ fontSizeOfTableScore +"px;'>";
+            }
+            
         }
         
+        if (max_number_of_player_to_display<tableau_player.length)
+        {
+            tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowpasstacker><td></td><td class=colnames>&hellip;</td></tr>";
+        }
+        
+        tableauHTMLplayer = tableauHTMLplayer+"</table></td></tr></table>";
+        
+        document.getElementById('display_player').innerHTML = tableauHTMLplayer;
+
     }
-    
-    if (max_number_of_player_to_display<tableau_player.length)
-    {
-        tableauHTMLplayer = tableauHTMLplayer + "<tr class=rowpasstacker><td></td><td class=colnames>&hellip;</td></tr>";
-    }
-    
-    tableauHTMLplayer = tableauHTMLplayer+"</table></td></tr></table>";
-    
-    document.getElementById('display_player').innerHTML = tableauHTMLplayer;
 }
 
 function updateGameAreaSize(myData, mySenderId) {
@@ -336,13 +366,14 @@ function updateGameAreaSize(myData, mySenderId) {
     console.log('traitement nouveau message D=Display du téléphone :',myData)
     temp_phone_gameAreaSize = tableau_gameAreaSize[1].split(":");
     console.log("phone_gameAreaSize",phone_gameAreaSize);
-    
+ 
+  
     if((0.1*temp_phone_gameAreaSize[0]!=phone_gameAreaSize[0])||(0.1*temp_phone_gameAreaSize[1]!=phone_gameAreaSize[1])) {
         console.log('mie à jour variable phone_gameAreaSize');
         phone_gameAreaSize[0] = 0.1*temp_phone_gameAreaSize[0];
         phone_gameAreaSize[1] = 0.1*temp_phone_gameAreaSize[1];
         console.log("phone_gameAreaSize = ",phone_gameAreaSize);
-        if(tableau_gameAreaSize[2]==1){
+        if((tableau_gameAreaSize[2]==1)||(tableau_gameAreaSize[2]=="1")||(tableau_gameAreaSize[2]=="true")){
             modeOmbreChinoise = 1;
         }
         newImagineBoard();
@@ -380,9 +411,13 @@ function displayTimer(myData, mySenderId) {
     // console.log(hours);
     // document.getElementById('div_timer').innerHTML = 'Update heure du receiver = ' + hours + '<br>' + document.getElementById('div_timer').innerHTML;
 
-    document.getElementById('div_timer').innerHTML = "<font style='color:"+tableau_timer[2]+";'>" + tableau_timer[1]+"</font>";
+    document.getElementById('div_timer').innerHTML = "<font style='font-size:100%; color:"+tableau_timer[2]+";'>" + tableau_timer[1]+"</font>";
     
     if(mode_jeu==3){
+        var fontSizeMin = 8;
+        var fontSizeMax = 70;
+        var fontSizeOfDisplayRemPoints = Math.min(fontSizeMax,Math.max(fontSizeMin,0.9*(document.getElementById("remaining_points").clientHeight-16)));
+        document.getElementById('remaining_points').style.fontSize=fontSizeOfDisplayRemPoints.toString()+"px";
         document.getElementById('remaining_points').innerHTML = "Points en jeu : "+tableau_timer[3];
     } else {
         
